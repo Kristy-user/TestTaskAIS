@@ -36,6 +36,11 @@ const QuestionsStyle = styled.div`
     position: relative;
     padding-left: 33px;
     margin-bottom: 20px;
+    
+    > ol {
+      max-height: 500px;
+      transition: max-height 0.3s ease-in-out;
+    }
 
     & .icon {
       position: absolute;
@@ -46,17 +51,22 @@ const QuestionsStyle = styled.div`
       height: 22px;
       background: url(${x}) no-repeat center;
       cursor: pointer;
+      transition: transform 0.3s ease-in;
+      transform: rotate(0);
     }
     &.hidden .icon {
-      background: url(${plus}) no-repeat center;
+      transform: rotate(45deg);
     }
     &.hidden > ol {
-      display: none;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-in-out;
     }
 
     & ol {
       list-style: none;
       counter-reset: li;
+      transition: max-height 0.3s ease-in-out;
 
       & li {
         margin: 25px 0;

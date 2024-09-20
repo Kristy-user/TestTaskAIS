@@ -19,9 +19,9 @@ const ButtonStyle = styled.button`
 
 interface ButtonProps {
   className: string;
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
   text: string;
-  type: string;
+  type: 'submit' | 'button';
 }
 
 const Button: React.FC<ButtonProps> = (props) => {

@@ -1,16 +1,20 @@
+export interface UserLogin {
+  password: number;
+  email: string
+}
 export interface User {
-  isLoggedIn: boolean;
   remember: boolean;
   id: number;
   name: string;
   surname: string;
-  patronymic: string;
+  surname2:string;
   town: string;
   country: string;
   phone: string;
-  password: string;
   notifications: Array<string>;
-  image: string;
+  userId: number;
+  password:string;
+  email: string;
 }
 export interface News {
   id: number;
@@ -36,7 +40,7 @@ export interface Rows {
   cod: string;
   class: string;
   date: string;
-  adress: string;
+  address?: string;
 }
 
 export interface Documents {
@@ -45,7 +49,7 @@ export interface Documents {
   name: string;
   number: string;
   date: string;
-  link: string;
+  link?: string;
 }
 export interface Errors {
   password: string;

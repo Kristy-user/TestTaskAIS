@@ -5,7 +5,6 @@ import SearchField from '../../../Components/SearchField';
 import Button from '../../../Components/Button';
 import News from './Components/News/News';
 import Questions from './Components/Questions/Questions';
-import Footer from '../Footer/Footer';
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import Register from './Components/Register/Register';
@@ -78,11 +77,14 @@ const MainContentStyle = styled.div`
 
 const MainContent = () => {
   const [inputText, setInputText] = useState('');
-  const inputHandler = (e) => {
-    var lowerCase = e.target.value.toLowerCase();
+  const [searchTerm, setSearchTerm] = useState<string>('')
+  const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let lowerCase = e.target.value.toLowerCase();
     setInputText(lowerCase);
   };
-  const searchRegister = () => console.log('search');
+  const searchRegister = () => {
+    setSearchTerm(inputText); // Set the search term to trigger filtering
+  };
   const { pathname, hash } = useLocation();
 
   const handleScroll = () => {
@@ -95,6 +97,12 @@ const MainContent = () => {
       });
     }, 100);
   };
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      searchRegister();  // Call the search function when Enter is pressed
+    }
+  };
+
 
   useEffect(() => {
     handleScroll();
@@ -119,7 +127,8 @@ const MainContent = () => {
               className={'search-register'}
               onChange={inputHandler}
               value={inputText}
-              placeholderName={'Искать по реестру'}
+              onKeyDown={handleKeyPress}
+              placeholderName={'Искать по реестру (класс ПО)'}
             />
             <Button
               type="button"
@@ -134,7 +143,7 @@ const MainContent = () => {
         </div>
       </section>
       <section id={'register'}>
-        <Register />
+        <Register searchTerm={searchTerm}/>
       </section>
       <section id={'news'}>
         <News />

@@ -1,8 +1,9 @@
 import React from 'react';
-import { usePagination, DOTS } from 'hooks/usePagination';
+import {usePagination, DOTS, PaginationTypes} from '../hooks/usePagination';
 import styled from 'styled-components';
 import left from 'assets/icons/left.svg';
 import right from 'assets/icons/right.svg';
+
 const StyledPagination = styled.div`
   .pagination-container {
     display: flex;
@@ -25,91 +26,77 @@ const StyledPagination = styled.div`
       line-height: 25px;
       width: 42px;
       position: relative;
+
+      &:last-child, &:first-child {
+        padding-left: 0;
+      }
+
       &.dots:hover {
         background-color: transparent;
         cursor: default;
         border-radius: 2px;
       }
+
       &:hover {
         background-color: #009cb4;
         color: #fff;
         cursor: pointer;
       }
+      
+
       &.selected {
         background-color: #009cb4;
         color: #fff;
       }
-      .arrow {
-        position: absolute;
-        width: 20px;
-        height: 11px;
-        background-size: contain;
-        cursor: pointer;
-        &.left {
-          background: url(${left}) no-repeat center;
-          left: 10px;
-          &::before {
-            position: absolute;
-            content: '';
-            left: 6px;
-            width: 20px;
-            height: 11px;
-            background-size: contain;
-            background: url(${left}) no-repeat center;
+
+      .arrow-block {
+        display: flex;
+
+        & .arrow {
+          border: solid black;
+          border-width: 0 3px 3px 0;
+          display: inline-block;
+          padding: 3px;
+          &:last-child {
+            margin-left: 8px;
           }
-          &::after {
-            position: absolute;
-            content: '';
-            width: 20px;
-            height: 11px;
-            background-size: contain;
-            background: url(${left}) no-repeat center;
+
+          &.left {
+            transform: rotate(135deg);
+            -webkit-transform: rotate(135deg);
           }
-        }
-        &.right {
-          background: url(${right}) no-repeat center;
-          left: 8px;
-          &::before {
-            position: absolute;
-            content: '';
-            left: 6px;
-            width: 20px;
-            height: 11px;
-            background-size: contain;
-            background: url(${right}) no-repeat center;
-          }
-          &::after {
-            position: absolute;
-            content: '';
-            width: 20px;
-            height: 11px;
-            background-size: contain;
-            background: url(${right}) no-repeat center;
+
+          &.right {
+            transform: rotate(-45deg);
+            -webkit-transform: rotate(-45deg);
           }
         }
       }
       &.disabled {
-        s .arrow::before {
-          background: url(${left}) no-repeat center;
-          cursor: pointer;
+        .arrow-block > .arrow {
+          border: solid gray;
+          border-width: 0 3px 3px 0;
         }
-        &:hover {
-          background-color: transparent;
-          cursor: pointer;
+        &:last-child, &:first-child {
+          &:hover {
+            background-color: transparent;
+            color: #4d4d4f;
+            cursor: default;
+          }
         }
       }
     }
   }
 `;
 
-const Pagination = (props) => {
+const Pagination = (props:PaginationTypes) => {
+
   const {
     onPageChange,
     totalCount,
     siblingCount = 1,
     currentPage,
-    pageSize,
-    className,
+    pageSize
   } = props;
 
   const paginationRange = usePagination({
@@ -119,35 +106,41 @@ const Pagination = (props) => {
     pageSize,
   });
 
-  if (currentPage === 0 || paginationRange.length < 2) {
+  if (currentPage === 0 || ( paginationRange && paginationRange.length < 2)) {
     return null;
   }
+  let lastPage = paginationRange ? paginationRange[paginationRange.length - 1] : 1;
 
   const onNext = () => {
-    onPageChange(currentPage + 1);
+    if (currentPage < lastPage) {
+      onPageChange(currentPage + 1);
+    }
   };
 
   const onPrevious = () => {
-    onPageChange(currentPage - 1);
+    if (currentPage > 1) {
+      onPageChange(currentPage - 1);
+    }
   };
 
-  let lastPage = paginationRange[paginationRange.length - 1];
   return (
     <StyledPagination>
+
       <ul className={'pagination-container'}>
         <li
           className={`pagination-item ${currentPage === 1 ? ' disabled' : ''}`}
           onClick={onPrevious}
         >
-          <div className="arrow left" />
+          <div className="arrow-block">
+          <i className="arrow left"></i><i className="arrow left"></i><i className="arrow left"></i></div>
         </li>
-        {paginationRange.map((pageNumber) => {
+        {paginationRange ? paginationRange.map((pageNumber:number | string, index:number) => {
           if (pageNumber === DOTS) {
-            return <li className="pagination-item dots">&#8230;</li>;
+            return <li key={`dots-${index}`} className="pagination-item dots">&#8230;</li>;
           }
 
           return (
-            <li
+            <li key={pageNumber}
               className={`pagination-item ${
                 currentPage === pageNumber ? ' selected' : ''
               }`}
@@ -156,14 +149,15 @@ const Pagination = (props) => {
               {pageNumber}
             </li>
           );
-        })}
+        }) : 1}
         <li
           className={`pagination-item ${
             currentPage === lastPage ? ' disabled' : ''
           }`}
           onClick={onNext}
         >
-          <div className="arrow right" />
+          <div className="arrow-block">
+            <i className="arrow right"></i><i className="arrow right"></i><i className="arrow right"></i></div>
         </li>
       </ul>
     </StyledPagination>

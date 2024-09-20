@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import styled from 'styled-components';
 import { Formik, Form, Field } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { isLogIn } from 'store/actions/user';
-import { userSelector } from 'store/selectors/userSelector';
-import Button from 'Components/Button';
-import { loadingUsers } from 'store/actions/user';
-import { user } from 'assets/mockData';
-import FormikInput from 'Components/FormikInput';
+import {isLogIn, updateUserInfo} from '../../../store/actions/user';
+import {userLogInSelector, userSelector} from '../../../store/selectors/userSelector';
+import Button from '../../../Components/Button';
+import FormikInput from '../../../Components/FormikInput';
 import { Link, useNavigate } from 'react-router-dom';
-import { Errors } from 'types/types';
+import { Errors } from '../../../types/types';
+import fakeServerAPI from "../../../api/fakeServerAPI";
+import ErrorWindow from "../../../HOC/ErrorWindow";
+import {ModalContext} from "../../../HOC/GlobalModalProvider";
 
 const LogStyle = styled.div`
   display: flex;
@@ -72,48 +73,64 @@ const LogStyle = styled.div`
 const Login = () => {
   const dispatch = useDispatch();
   const navig = useNavigate();
-  const currentUser = useSelector(userSelector);
+  const openModal = useContext(ModalContext);
 
-  const validate = (values) => {
+  interface LoginFormValues {
+    email: string;
+    password: string;
+  }
+  const validate = (values:LoginFormValues) => {
     const errors: Errors = {
       name: '',
       password: '',
     };
     let isError = false;
-    if (values.name !== user.name) {
-      errors.name = 'Имя не совпадает';
-      isError = true;
-    }
-
-    if (values.password !== user.password) {
-      errors.password = 'Неверный пароль';
-      isError = true;
-    }
 
     if (isError) return errors;
   };
 
+  const handleLoginSubmit = async (formValues: LoginFormValues) => {
+    try {
+      const loginResponse = await fakeServerAPI.post('/login', {
+        email: formValues.email,
+        password: formValues.password,
+      });
+
+      const userInfo = loginResponse.data.user;
+
+      dispatch(isLogIn(true)); // Set login status
+      dispatch(updateUserInfo(userInfo)); // Update user info in the store
+
+      navig('/'); // Navigate to the home page or desired route
+    } catch (error:any) {
+      openModal(
+        <ErrorWindow
+          textError={error.response && error.response.data ? error.response.data : error.message ? error.message : 'An unknown error occurred.'}
+          setModal={openModal}
+        />
+      );
+      console.error('Login failed:', error); // Handle errors appropriately
+    }
+  };
+
   return (
     <LogStyle>
+
       <Formik
         initialValues={{
-          name: '',
           password: '',
+          email:'',
           remember: true,
         }}
         validate={validate}
-        onSubmit={(formValues) => {
-          console.log(formValues);
-          dispatch(isLogIn(true));
-          navig('/');
-        }}
+        onSubmit={handleLoginSubmit}
       >
         <Form>
           <FormikInput
-            name="name"
-            placeholder="Введите имя"
-            label="Имя"
-            type="text"
+            name="email"
+            placeholder="Введите email"
+            label="Email"
+            type="email"
           />
           <FormikInput
             name="password"
@@ -121,12 +138,6 @@ const Login = () => {
             label="Пароль"
             type="password"
           />
-          <label className="check">
-            <Field name="remember" className="remember" type="checkbox" />
-            <span className="text-label">
-              Запомнить меня на этом компьютере{' '}
-            </span>
-          </label>
           <Button type="submit" className="log" text=" Вxoд" />
         </Form>
       </Formik>
@@ -142,7 +153,7 @@ const Login = () => {
         </div>
 
         <p>У вас нет аккаунта?</p>
-        <Link className="link-color" to="#">
+        <Link className="link-color" to="/registration">
           Нажмите сюда чтобы создать
         </Link>
       </div>

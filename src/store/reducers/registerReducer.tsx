@@ -13,7 +13,7 @@ const initialState: RegisterState = {
 };
 
 export const registerReducer = createReducer(initialState, (builder) => {
-  builder.addCase(loadingRegisterList, (state, action) => {
+  builder.addCase(loadingRegisterList, (state, action: PayloadAction<any[]>) => {
     state.registerList = [...action.payload];
   });
 });

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 import styled from 'styled-components';
-import { ModalShow } from 'types/types';
 
 const StyledModalWrapper = styled.div`
   position: absolute;
@@ -30,7 +29,7 @@ const StyledModalWrapper = styled.div`
   }
 `;
 
-export const ModalContext = React.createContext<(value: boolean) => void>(
+export const ModalContext = React.createContext<(value: any) => void>(
   () => {}
 );
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Field, useField } from 'formik';
 import styled from 'styled-components';
-import { NavLink, NavNavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 import exit from 'assets/icons/exit.svg';
 import userImg from 'assets/icons/defaultImg.svg';
 import register from 'assets/icons/register.svg';
@@ -9,6 +9,7 @@ import secure from 'assets/icons/secure.svg';
 import notification from 'assets/icons/reminder.svg';
 import download from 'assets/icons/download.svg';
 import metadata from 'assets/icons/metadata.svg';
+
 const CreateWrapper = styled.div`
   display: flex;
   flex-direction: row;

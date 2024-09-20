@@ -1,27 +1,29 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { loadingUsers } from 'store/actions/user';
-import { User } from 'types/types';
-import { isLogIn, updateUserInfo } from '../actions/user';
+import { User } from '../../types/types';
+import { isLogIn, updateUserInfo, logOut} from '../actions/user';
 
 export interface UserState {
-  user: User;
-  loading: false;
+  user:  Partial<User>;
+  isLoggedIn: boolean;
 }
 
 const initialState: UserState = {
   user: {},
-  loading: false,
+  isLoggedIn: false
 };
 
 export const userReducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(loadingUsers, (state, action) => {
-      state.user = action.payload;
+    .addCase(isLogIn, (state, { payload }) => {
+        state.isLoggedIn = payload;
     })
-    .addCase(isLogIn, (state, action) => {
-      state.user.isLoggedIn = action.payload;
+    .addCase(updateUserInfo, (state, { payload }) => {
+       if (payload) {
+        state.user = { ...payload };
+      }
     })
-    .addCase(updateUserInfo, (state, action) => {
-      state.user = action.payload;
-    });
+    .addCase(logOut, (state, action) => {
+        state.isLoggedIn = false;
+        state.user = {};
+    })
 });

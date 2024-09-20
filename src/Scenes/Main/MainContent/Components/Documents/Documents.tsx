@@ -1,9 +1,8 @@
 import React, { useMemo } from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { documents } from 'assets/mockData';
 import Table from '../Register/Table';
-import { documentsTitle } from '../../../../../assets/mockData';
+import { documentsTitle,documents } from '../../../../../assets/mockData';
 
 const DocumentsStyle = styled.div`
   margin: 120px auto;
@@ -26,8 +25,8 @@ const DocumentsStyle = styled.div`
     margin-left: 0;
 
     & .title-table {
-      text-align: left;
-
+      text-align: justify;
+      
       & th {
         font-weight: 500;
         font-size: 16px;
@@ -46,7 +45,17 @@ const DocumentsStyle = styled.div`
     }
     & td {
       padding: 20px;
-      padding-left: 0;
+      
+      &.load {
+        p {
+          color: #4d4d4f;
+          font-size: 14px; 
+        } 
+        &:hover > * {
+          cursor: pointer;
+          color: #009cb4;
+        }
+      }
     }
   }
 `;

@@ -11,6 +11,7 @@ const StyledInputWrapper = styled.div`
   margin-left: 0;
   align-self: flex-start;
   width: 100%;
+  
   & .label {
     margin: 0;
     text-align: left;
@@ -130,8 +131,8 @@ const FormikInput: React.FC<FormikProps> = (props) => {
       ) : null}
       {meta.touched && meta.error ? (
         <div className={'error'}>{meta.error}</div>
-      ) : meta.touched && props.name === 'name' ? (
-        <div className="ok-label"></div>
+      ) : meta.touched && !meta.error ? (
+        <div className=""></div>
       ) : null}
     </StyledInputWrapper>
   );

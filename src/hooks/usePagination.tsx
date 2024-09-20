@@ -1,19 +1,26 @@
 import React from 'react';
 import { useMemo } from 'react';
 
+export interface PaginationTypes {
+  onPageChange:(page:number|string)=>(void),
+  totalCount:number,
+  siblingCount?:number,
+  currentPage:number,
+  pageSize:number,
+}
 export const DOTS = '...';
 
-const range = (start, end) => {
+const range = (start:number, end:number) => {
   let length = end - start + 1;
   return Array.from({ length }, (_, idx) => idx + start);
 };
 
 export const usePagination = ({
-  totalCount,
-  pageSize,
+  totalCount = 1,
+  pageSize = 1,
   siblingCount = 1,
-  currentPage,
-}) => {
+  currentPage = 1,
+}: Partial<PaginationTypes>) => {
   const paginationRange = useMemo(() => {
     const totalPageCount = Math.ceil(totalCount / pageSize);
 
@@ -42,6 +49,7 @@ export const usePagination = ({
       return [...leftRange, DOTS, totalPageCount];
     }
 
+    // No right dots, but left dots
     if (shouldShowLeftDots && !shouldShowRightDots) {
       let rightItemCount = 3 + 2 * siblingCount;
       let rightRange = range(

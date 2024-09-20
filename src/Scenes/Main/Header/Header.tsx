@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import UserBar from './Components/UserBar';
 import logo from 'assets/icons/logo.svg';
-import search from 'assets/icons/search.svg';
+import { useNavigate } from 'react-router-dom';
 import calendar from 'assets/icons/calendar.svg';
 import SearchField from '../../../Components/SearchField';
 
@@ -15,6 +15,7 @@ const HeaderStyle = styled.div`
     background: url(${logo}) no-repeat center;
     background-size: contain;
     margin: 0;
+    cursor: pointer;
   }
   .search-field {
     max-width: 270px;
@@ -39,20 +40,15 @@ const HeaderStyle = styled.div`
 
 const Header = () => {
   const [inputText, setInputText] = useState('');
-  const inputHandler = (e) => {
-    var lowerCase = e.target.value.toLowerCase();
+  const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let lowerCase = e.target.value.toLowerCase();
     setInputText(lowerCase);
   };
-  console.log(inputText);
+  const navig = useNavigate();
+
   return (
     <HeaderStyle>
-      <div className={'logo'}></div>
-      <SearchField
-        className={'search-field'}
-        onChange={inputHandler}
-        value={inputText}
-        placeholderName={'Поиск'}
-      />
+      <div className={'logo'} onClick={()=>navig('/')}></div>
       <div className="calendar"></div>
       <UserBar />
     </HeaderStyle>

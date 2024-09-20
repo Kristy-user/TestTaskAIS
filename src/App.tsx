@@ -1,12 +1,12 @@
-import React from 'react';
+import React,{ FC } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { GlobalStyles } from 'GlobalStyles/globalStyles';
+import { GlobalStyles } from './GlobalStyles/globalStyles';
 import GlobalModalProvider from './HOC/GlobalModalProvider';
 import RootRouter from './Route/RootRouter';
 import { Provider } from 'react-redux';
-import { store } from 'store/initStore';
+import { store } from './store/initStore';
 
-const App = () => {
+const App: FC = () => {
   return (
     <Provider store={store}>
       <BrowserRouter>

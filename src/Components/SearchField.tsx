@@ -44,7 +44,8 @@ const SearchStyle = styled.div`
 
 interface SearchFieldProps {
   className: string;
-  onChange: (e: React.FormEvent<HTMLInputElement>) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   value: string;
   placeholderName: string;
 }
@@ -57,6 +58,7 @@ const SearchField: React.FC<SearchFieldProps> = (props) => {
         placeholder={props.placeholderName}
         type="text"
         id="search"
+        onKeyDown={props.onKeyDown}
         onChange={props.onChange}
         value={props.value}
       ></input>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC} from 'react';
 import { useSelector } from 'react-redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
 // import { userSelector } from 'store/selectors/userSelector';
@@ -9,12 +9,14 @@ import MainInfo from '../Scenes/Authorization/Components/MainInfo';
 import OtherMenu from '../Scenes/Authorization/Components/OtherMenu';
 import MainContent from '../Scenes/Main/MainContent/MainContent';
 import { userSelector } from '../store/selectors/userSelector';
+import Registration from "../Scenes/Authorization/Components/Registration";
 
-const RootRouter = () => {
+const RootRouter:FC = () => {
   return (
     <Routes>
       <Route path={'/'} element={<MainLayouts />}>
         <Route path={'authorization'} element={<Authorization />} />
+        <Route path={'registration'} element={<Registration/>}/>
         <Route path={'register'} element={<CreateAccount />}>
           <Route path={'private-data'} element={<MainInfo />} />
           <Route path={'notification'} element={<OtherMenu />} />

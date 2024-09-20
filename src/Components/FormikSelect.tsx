@@ -5,6 +5,7 @@ import { usePreviousProps } from '@mui/utils';
 
 const SelectWrapper = styled.div`
   min-width: 100%;
+  font-size: 14px;
   & .label {
     margin: 0;
     text-align: left;
