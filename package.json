@@ -1,13 +1,15 @@
 {
   "name": "test_task",
+  "homepage": "https://github.com/Kristy-user.github.io/registries-ais",
   "version": "1.0.0",
   "description": "",
   "main": "index.tsx",
   "scripts": {
     "start": "webpack serve",
     "build": "webpack build",
-    "startServer": "json-server ./fakeServer/db.json -m ./node_modules/json-server-auth",
-    "test": "test"
+    "startServer": "json-server ./fakeServer/db.json -m ./node_modules/json-server-auth --port=3001",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "author": "Kristina Klepik",
   "license": "ISC",

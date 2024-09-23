@@ -6,37 +6,10 @@
       "surname2": "Иванов",
       "town": "Минск",
       "country": "Беларусь",
-      "password": "$2a$10$MXAV2I85bPwae54RifXVqOxMkXnzKaMQhQtVQiAq51ELowqDzQzwm",
-      "phone": "+375221113355",
-      "email": "testuser@gmail.com",
-      "id": 3
-    },
-    {
-      "name": "Иван",
-      "surname": "Зайцев",
-      "surname2": "Иванов",
-      "town": "Минск",
-      "country": "Беларусь",
-      "password": "$2a$10$UByf3QY93SSDHNwh/IvpVuguYkV4pPGpXDMOT6AIjGTroH.OGof56",
-      "phone": "+37529 111 22 34",
-      "email": "new@test.com",
-      "id": 2
-    },
-    {
-      "email": "rsvf@tyb.tb",
-      "password": "$2a$10$QnLubrV3skvvMGnR9JIzzOBRdwWaGwtHqv2eLAaHEZcORtrAPOQui",
+      "password": "$2a$10$ePYcYh9Ye4y3aUfWIXw9muKDLaSOj3hsPOgdFD0NdbU6deA8kU6lS",
+      "phone": "+375221113344",
+      "email": "user@gmail.com",
       "id": 4
-    },
-    {
-      "name": "Кристина",
-      "surname": "Иванова",
-      "surname2": "Андреевна",
-      "town": "Минск",
-      "country": "Беларусь",
-      "password": "$2a$10$A.moW.dK2PD69yXIokWvI.wyVd.pQ3QulwDuutfVkCapuIBOjJ5OK",
-      "phone": "+375291112233",
-      "email": "ntu@yh.bht",
-      "id": 5
     }
   ]
 }

@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import arrowLeft from 'assets/icons/arrow-left.svg';
 import {Link, useNavigate} from 'react-router-dom';
-import { Formik, Form } from 'formik';
+import {Formik, Form} from 'formik';
 import {useDispatch} from "react-redux";
 import {Errors, User} from "../../../types/types";
 import fakeServerAPI from "../../../api/fakeServerAPI";
@@ -16,12 +16,15 @@ const RegistrationStyle = styled.div`
   flex-direction: column;
   justify-self: center;
   margin-bottom: 20px;
+
   .logIn {
     min-width: 37%;
+
     & form {
       margin: 0;
     }
   }
+
   & h3 {
     font-weight: 700;
     font-size: 36px;
@@ -33,15 +36,18 @@ const RegistrationStyle = styled.div`
     margin: 0 auto;
     margin-bottom: 26px;
   }
+
   .save {
     padding: 17px 0;
     margin: auto;
     width: 100%;
   }
-  .footer-login{
+
+  .footer-login {
     text-align: center;
     margin-top: 20px;
   }
+
   .link-color {
     letter-spacing: 0.8px;
     margin: 20px auto;
@@ -49,17 +55,19 @@ const RegistrationStyle = styled.div`
     text-decoration: underline;
     padding-bottom: 20px;
   }
-  
+
   .link {
     margin-top: 26px;
     margin-left: 0;
     position: relative;
+
     & a {
       font-weight: 500;
       font-size: 18px;
       line-height: 25px;
       padding-left: 40px;
       letter-spacing: 1px;
+
       &:before {
         position: absolute;
         content: '';
@@ -75,7 +83,7 @@ const RegistrationStyle = styled.div`
 
 interface FormValuesTypes {
   password: string;
-  email:string;
+  email: string;
   name: string;
   surname: string;
   surname2: string;
@@ -83,6 +91,7 @@ interface FormValuesTypes {
   country: string;
   phone: string;
 }
+
 const Registration = () => {
 
   const dispatch = useDispatch();
@@ -101,14 +110,13 @@ const Registration = () => {
 
   const handleRegistrationSubmit = async (formValues: FormValuesTypes) => {
     try {
+      let {name, surname, surname2, email, phone, town, country, password} = formValues;
+
       const createUserResponse = await fakeServerAPI.post('/register', {
-        email: formValues.email,
-        password: formValues.password,
+        name, surname, surname2, email, phone, town, country, password
       })
       const userId = createUserResponse.data.user.id;
-
-      let {name, surname,surname2,email,phone,town,country} = formValues;
-      const userInfo: Partial<User>= {
+      const userInfo: Partial<User> = {
         email,
         name,
         surname,
@@ -138,84 +146,84 @@ const Registration = () => {
           initialValues={{
             name: '',
             password: '',
-            email:'',
-            surname:'',
-            surname2:'',
-            town:'Минск',
-            country:'Беларусь',
-            phone:''
+            email: '',
+            surname: '',
+            surname2: '',
+            town: 'Минск',
+            country: 'Беларусь',
+            phone: ''
           }}
           validate={validate}
           onSubmit={handleRegistrationSubmit}
         >
-        <Form>
-          <div className={'grid-field'}>
+          <Form>
+            <div className={'grid-field'}>
 
-          <FormikInput
-            name="name"
-            placeholder="Введите имя"
-            label="Имя"
-            type="text"
-          />
-          <FormikInput
-            name="surname"
-            placeholder="Введите фамилию"
-            label="Фамилия"
-            type="text"
-          />
-            <FormikInput
-              name="surname2"
-              placeholder="Введите отчество"
-              label="Отчество"
-              type="text"
-            />
-          <FormikInput
-            name="email"
-            placeholder="Введите email"
-            label="Email"
-            type="email"
-          />
-          <FormikSelect
-            options={['Беларусь', 'Россия', 'Украина', 'Польша', 'Литва']}
-            name="country"
-            label="Страна"
-          />
-          <FormikSelect
-            options={[
-              'Минск',
-              'Гомель',
-              'Брест',
-              'Витебск',
-              'Могилев',
-              'Гродно',
-            ]}
-            name="city"
-            label="Город"
-          />
-          <FormikInput
-            name="phone"
-            placeholder="+375 XX XXX XXX"
-            label="Мобильный телефон"
-            type="text"
-          />
-          <FormikInput
-            name="password"
-            placeholder="Введите пароль"
-            label="Пароль"
-            type="password"
-          />
-          </div>
-          <div className="line">
-            <Button type="submit" className="save" text="Сохранить"/>
-          </div>
-        </Form>
+              <FormikInput
+                name="name"
+                placeholder="Введите имя"
+                label="Имя"
+                type="text"
+              />
+              <FormikInput
+                name="surname"
+                placeholder="Введите фамилию"
+                label="Фамилия"
+                type="text"
+              />
+              <FormikInput
+                name="surname2"
+                placeholder="Введите отчество"
+                label="Отчество"
+                type="text"
+              />
+              <FormikInput
+                name="email"
+                placeholder="Введите email"
+                label="Email"
+                type="email"
+              />
+              <FormikSelect
+                options={['Беларусь', 'Россия', 'Украина', 'Польша', 'Литва']}
+                name="country"
+                label="Страна"
+              />
+              <FormikSelect
+                options={[
+                  'Минск',
+                  'Гомель',
+                  'Брест',
+                  'Витебск',
+                  'Могилев',
+                  'Гродно',
+                ]}
+                name="city"
+                label="Город"
+              />
+              <FormikInput
+                name="phone"
+                placeholder="+375 XX XXX XXX"
+                label="Мобильный телефон"
+                type="text"
+              />
+              <FormikInput
+                name="password"
+                placeholder="Введите пароль"
+                label="Пароль"
+                type="password"
+              />
+            </div>
+            <div className="line">
+              <Button type="submit" className="save" text="Сохранить"/>
+            </div>
+          </Form>
         </Formik>
-        </div>
+      </div>
       <div className={'footer-login'}>
-      <p>У вас уже есть аккаунт?</p>
-      <Link className="link-color" to="/authorization">
-        Нажмите сюда чтобы авторизоваться
-      </Link>
+        <p>У вас уже есть аккаунт?</p>
+        <Link className="link-color" to="/authorization">
+          Нажмите сюда чтобы авторизоваться
+        </Link>
       </div>
     </RegistrationStyle>
   );
