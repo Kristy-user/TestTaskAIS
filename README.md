@@ -2,7 +2,7 @@
 ## Deploy (without auth logic) see here:
 [Vercel](https://registries-ais.vercel.app/)
 
-[GitPages](https://github.com/Kristy-user.github.io/registries-ais)
+[GitPages](https://kristy-user.github.io/registries-ais/)
 
 ## Steps to run local (all features available)
 
